@@ -4,6 +4,7 @@
 
 <hibernate-configuration>
 	<session-factory>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="show_sql">false</property>
 		<property name="format_sql">true</property>
 		<property name="dialect">org.sqlite.hibernate.dialect.SQLiteDialect</property>
@@ -11,8 +12,10 @@
 		<property name="connection.url">jdbc:sqlite:database.db</property>
 		<property name="connection.username"></property>
 		<property name="connection.password"></property>
-	
-		<!-- tu wstaw mapowania: <mapping class="pl.edu.agh.mwo.hibernate.NazwaKlasy"/> -->
+
+		<mapping class="pl.edu.agh.mwo.hibernate.models.Album"/>
+		<mapping class="pl.edu.agh.mwo.hibernate.models.Photo"/>
+		<mapping class="pl.edu.agh.mwo.hibernate.models.User"/>
 		
 	</session-factory>
 </hibernate-configuration>
