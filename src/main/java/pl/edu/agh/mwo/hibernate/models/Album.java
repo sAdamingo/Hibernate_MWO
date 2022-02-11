@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "Albums")
 public class Album {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "album_id", nullable = false)
     private Integer id;
 

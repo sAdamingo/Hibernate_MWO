@@ -15,6 +15,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main main = new Main();
+		addData(main);
+		main.close();
+	}
+
+	private static void addData(Main main) {
 		main.session.getSessionFactory().openSession();
 		User u1 = new User("Stefano", Date.valueOf(LocalDate.now()));
 		User u2 = new User("Sophia", Date.valueOf(LocalDate.now()));
@@ -33,7 +38,6 @@ public class Main {
 		transaction.commit();
 
 		main.session.close();
-		main.close();
 	}
 
 	public Main() {
