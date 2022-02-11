@@ -13,10 +13,70 @@ public class Main {
 
 	Session session;
 
+	/**
+	 * Start from adding Data, then check subsequent database behaviours,
+	 * but remember to drop tables and adding data again before each.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Main main = new Main();
-		addData(main);
+		//addData(main);
+		//deletingLikeDoNotImpactOtherElements(main);
+		//deletingPhotoWillDeleteItsLikes(main);
+		//deletingAlbumWillDeletePhotos(main);
+		//deletingUserWillDeleteAlbumsAndPhotos(main);
+		//dropTables(main);
 		main.close();
+	}
+
+	private static void deletingAlbumWillDeletePhotos(Main main) {
+		main.session.getSessionFactory().openSession();
+		Transaction transaction = main.session.beginTransaction();
+		Album album = main.session.get(Album.class,1);
+		main.session.delete(album);
+		transaction.commit();
+		main.session.close();
+	}
+
+	private static void dropTables(Main main) {
+		main.session.getSessionFactory().openSession();
+		Transaction transaction = main.session.beginTransaction();
+		main.session.createSQLQuery("drop table if exists Albums;").executeUpdate();
+		main.session.createSQLQuery("drop table if exists Photos;").executeUpdate();
+		main.session.createSQLQuery("drop table if exists Users;").executeUpdate();
+		main.session.createSQLQuery("drop table if exists UsersLikes;").executeUpdate();
+		transaction.commit();
+		main.session.close();
+	}
+
+	private static void deletingUserWillDeleteAlbumsAndPhotos(Main main) {
+		main.session.getSessionFactory().openSession();
+		Transaction transaction = main.session.beginTransaction();
+		User user = main.session.get(User.class,1);
+		main.session.delete(user);
+		transaction.commit();
+		main.session.close();
+	}
+
+
+	private static void deletingLikeDoNotImpactOtherElements(Main main) {
+		main.session.getSessionFactory().openSession();
+		Transaction transaction = main.session.beginTransaction();
+		User user = main.session.get(User.class, 2);
+		Photo photo = main.session.get(Photo.class,1);
+		user.unlikePhoto(photo);
+		main.session.save(user);
+		transaction.commit();
+		main.session.close();
+	}
+
+	private static void deletingPhotoWillDeleteItsLikes(Main main) {
+		main.session.getSessionFactory().openSession();
+		Transaction transaction = main.session.beginTransaction();
+		Photo photo = main.session.get(Photo.class,1);
+		main.session.delete(photo);
+		transaction.commit();
+		main.session.close();
 	}
 
 	private static void addData(Main main) {
@@ -36,7 +96,6 @@ public class Main {
 		main.session.save(p1);
 		main.session.save(a1);
 		transaction.commit();
-
 		main.session.close();
 	}
 

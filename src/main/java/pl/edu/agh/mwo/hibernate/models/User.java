@@ -1,5 +1,7 @@
 package pl.edu.agh.mwo.hibernate.models;
 
+import org.hibernate.action.internal.OrphanRemovalAction;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +22,8 @@ public class User {
     @ManyToMany(mappedBy = "userLikes")
     private Set<Photo> photosLiked;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     private Set<Album> albums;
 
     public User() {

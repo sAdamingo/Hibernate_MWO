@@ -18,7 +18,7 @@ public class Photo {
     private Date date;
     @ManyToMany
     @JoinTable(
-            name = "Photos_Users",
+            name = "UsersLikes",
             joinColumns = {@JoinColumn(name = "photo_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
