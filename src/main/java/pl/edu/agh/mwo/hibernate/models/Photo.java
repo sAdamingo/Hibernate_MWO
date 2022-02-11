@@ -2,16 +2,19 @@ package pl.edu.agh.mwo.hibernate.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "Photos")
 public class Photo {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
     private String name;
+
     private Date date;
     @ManyToMany
     @JoinTable(
@@ -22,6 +25,12 @@ public class Photo {
     private Set<User> userLikes;
 
     public Photo() {
+    }
+
+    public Photo(String name, Date date) {
+        this.name = name;
+        this.date = date;
+        this.userLikes = new HashSet<>();
     }
 
     public String getName() {
