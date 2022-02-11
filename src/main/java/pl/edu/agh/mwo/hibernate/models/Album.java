@@ -16,7 +16,8 @@ public class Album {
 
     private String description;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "album_idRef", referencedColumnName = "album_id")
     private Set<Photo> photos;
 
     public Album() {
